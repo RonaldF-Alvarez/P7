@@ -12,4 +12,3 @@ Este projeto é feito de forma procedural, não orientado a objeto!
 O projeto sofrerá grandes e diversas atualizações com o intuido de refino.
 O projeto é apenas academico, sem interesse comercial!
 O projeto também poderá ser usado como portifólio pessoal.
-
