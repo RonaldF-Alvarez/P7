@@ -1,0 +1,18 @@
+
+V -0.1 = Primeira atualização sobre o projeto. A tela simples com as abas "Procurar produtos" e "carrinho" possui duas grids 
+que interagem entre si. Ao clicar com o botão direito do mouse, abre-se um popupmenu com uma unica opção (Adicionar ao carrinho).
+Ao fazer a adição ao carrinho a tela em foco passa para a aba "carrinho", e com ela os dados do item selecionado vão 
+para o banco de dados, numa tabela específica com o código e quantidade dos mesmos (Futuramente será implementado 
+a opção de quantidade). Após a informação do produto chegar ao banco de dados, uma view é atualizada com as informações necessárias
+sobre o item, em uma segunda grid na aba carrinho.
+
+V - 0.2 = Foram feitas algumas alterações, a principal delas é a implementação de um dialogo para que o usuário consiga escolher
+a quantidade do mesmo item. Outros tipos de alterações foram feitos, refino das páginas e limpeza dos itens presentes no carrinho,
+aos quais antes não era possivel, em duas opções: a de remover um ou mais itens selecionados, ou todos os itens do carrinho.
+Também temos a implementação de ao usuário clicar duas vezes sobre o item presente na grid, ele consiga enviar
+também para o carrinho, da mesma forma que quando se é utilizado o popupmenu.
+Foi criado esse documento "changelog", para que todas as atualiações possam ser reunidas e lidas em um local!
+
+Pessoalmente, agradeço a todos que estão vendo meu progresso com este projeto!
+
+
