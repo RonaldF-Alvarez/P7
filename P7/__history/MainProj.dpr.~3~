@@ -1,0 +1,16 @@
+program MainProj;
+
+uses
+  Vcl.Forms,
+  MainUnit in 'MainUnit.pas' {Main},
+  Addcart in 'Addcart.pas' {FormAddCart};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TMain, Main);
+  Application.CreateForm(TFormAddCart, FormAddCart);
+  Application.Run;
+end.

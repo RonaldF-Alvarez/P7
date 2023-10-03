@@ -44,7 +44,7 @@ object Main: TMain
         Height = 25
         Caption = 'C'#243'digo Produto:'
       end
-      object Label1: TLabel
+      object LblCodUniversal: TLabel
         Left = 400
         Top = 158
         Width = 163
@@ -150,30 +150,44 @@ object Main: TMain
         NumbersOnly = True
         TabOrder = 4
       end
-      object Btn: TButton
+      object BtnLimparPesquisa: TButton
         Left = 985
         Top = 155
         Width = 168
         Height = 33
         Caption = 'Limpar pesquisa'
         TabOrder = 5
+        OnClick = BtnLimparPesquisaClick
       end
     end
     object PgCarrinho: TTabSheet
       Caption = 'Carrinho'
       ImageIndex = 1
-      object Label3: TLabel
+      object Label2: TLabel
+        Left = 1698
+        Top = 136
+        Width = 46
+        Height = 25
+        Caption = 'Total'
+      end
+      object LblTitle: TLabel
         Left = 24
         Top = 16
-        Width = 80
-        Height = 25
+        Width = 101
+        Height = 33
         Caption = 'Carrinho'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -27
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
       end
       object DBGrid2: TDBGrid
-        Left = 3
-        Top = 60
-        Width = 1910
-        Height = 725
+        Left = -4
+        Top = 125
+        Width = 1397
+        Height = 690
         DataSource = DataSourceCart
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
@@ -192,36 +206,104 @@ object Main: TMain
             Expanded = False
             FieldName = 'nome_produto'
             Title.Caption = 'Nome'
-            Width = 675
+            Width = 715
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'cod_universal'
             Title.Caption = 'C'#243'digo Universal'
-            Width = 164
+            Width = 175
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'veiculo'
             Title.Caption = 'Ve'#237'culo'
-            Width = 90
+            Width = 112
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'preco'
             Title.Caption = 'Pre'#231'o'
-            Width = 98
+            Width = 116
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'quantidade'
             Title.Caption = 'Quantidade'
+            Width = 124
             Visible = True
           end>
+      end
+      object Button1: TButton
+        Left = 1432
+        Top = 458
+        Width = 178
+        Height = 41
+        Caption = 'Finalizar compra'
+        TabOrder = 1
+      end
+      object BtnLimparCarrinho: TButton
+        Left = 1432
+        Top = 300
+        Width = 178
+        Height = 41
+        Caption = 'Limpar carrinho'
+        Enabled = False
+        TabOrder = 2
+        OnClick = BtnLimparCarrinhoClick
+      end
+      object BtnRemoverItem: TButton
+        Left = 1432
+        Top = 207
+        Width = 178
+        Height = 41
+        Caption = 'Remover item'
+        Enabled = False
+        TabOrder = 3
+        OnClick = BtnRemoverItemClick
+      end
+      object RemoveCheck: TCheckBox
+        Left = 1464
+        Top = 254
+        Width = 113
+        Height = 17
+        Caption = 'Confirmar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 4
+        OnClick = RemoveCheckClick
+      end
+      object BtnOrcamento: TButton
+        Left = 1432
+        Top = 395
+        Width = 178
+        Height = 41
+        Caption = 'Or'#231'amento'
+        TabOrder = 5
+        OnClick = BtnOrcamentoClick
+      end
+      object ClearCheck: TCheckBox
+        Left = 1464
+        Top = 347
+        Width = 113
+        Height = 17
+        Caption = 'Confirmar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 6
+        OnClick = ClearCheckClick
       end
     end
   end
@@ -230,17 +312,20 @@ object Main: TMain
     ConnectionString = 
       'Provider=PGNP.1;Password=2581379;Persist Security Info=True;User' +
       ' ID=postgres;Initial Catalog=Proj7;Data Source=localhost;Extende' +
-      'd Properties="SSL=prefer;"'
+      'd Properties="SSL=prefer;";Location="";Mode=ReadWrite;Use Proced' +
+      'ure for Prepare=1;Auto Translate=True;Packet Size=4096;Applicati' +
+      'on Name="";Workstation ID="";Use Encryption for Data=False;Tag w' +
+      'ith column collation when possible=False'
+    LoginPrompt = False
     Mode = cmReadWrite
     Provider = 'PGNP.1'
     AfterConnect = FormCreate
-    Left = 728
-    Top = 32
+    Left = 736
   end
   object DataSource: TDataSource
     DataSet = ADOQuery
-    Left = 608
-    Top = 32
+    Left = 648
+    Top = 40
   end
   object ADOQuery: TADOQuery
     Connection = ADOConnection
@@ -248,8 +333,8 @@ object Main: TMain
     Parameters = <>
     SQL.Strings = (
       'SELECT * FROM produtos ')
-    Left = 668
-    Top = 28
+    Left = 692
+    Top = 36
     object ADOQuerycod_produto: TIntegerField
       FieldName = 'cod_produto'
     end
@@ -277,11 +362,11 @@ object Main: TMain
     end
   end
   object PopupMenu1: TPopupMenu
-    Left = 668
-    Top = 228
-    object Adicionarcarrinho1: TMenuItem
+    Left = 380
+    Top = 308
+    object Adicionarcarrinho: TMenuItem
       Caption = 'Adicionar ao carrinho'
-      OnClick = Adicionarcarrinho1Click
+      OnClick = AdicionarcarrinhoClick
     end
   end
   object ADOQueryCart: TADOQuery
@@ -291,8 +376,8 @@ object Main: TMain
     Parameters = <>
     SQL.Strings = (
       'SELECT * FROM carrinho_grid')
-    Left = 492
-    Top = 292
+    Left = 780
+    Top = 28
     object ADOQueryCartcod_produto: TIntegerField
       FieldName = 'cod_produto'
     end
@@ -317,7 +402,7 @@ object Main: TMain
   end
   object DataSourceCart: TDataSource
     DataSet = ADOQueryCart
-    Left = 404
-    Top = 292
+    Left = 828
+    Top = 36
   end
 end

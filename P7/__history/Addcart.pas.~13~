@@ -1,0 +1,57 @@
+unit Addcart;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TFormAddCart = class(TForm)
+    Label1: TLabel;
+    LblQntd: TLabel;
+    EditQtd: TEdit;
+    BtnMenos: TButton;
+    BtnMais: TButton;
+    BtnApply: TButton;
+    BtnCancel: TButton;
+    procedure BtnMaisClick(Sender: TObject);
+    procedure BtnMenosClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormAddCart: TFormAddCart;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFormAddCart.BtnMaisClick(Sender: TObject);
+var
+Qtd : integer;
+Valor: integer;
+
+begin
+Qtd := 1;
+Valor := StrToInt(EditQtd.Text);
+Valor := Valor + Qtd;
+EditQtd.Text := IntToStr(Valor);
+end;
+
+procedure TFormAddCart.BtnMenosClick(Sender: TObject);
+var
+Qtd : integer;
+Valor: integer;
+
+begin
+Qtd := 1;
+Valor := StrToInt(EditQtd.Text);
+Valor := Valor - Qtd;
+EditQtd.Text := IntToStr(Valor);
+end;
+
+end.

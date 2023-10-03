@@ -13,24 +13,11 @@ uses
 
 type
   TMain = class(TForm)
-    PageControl: TPageControl;
-    Vendas: TTabSheet;
-    PgCarrinho: TTabSheet;
-    LblNomeProduto: TLabel;
-    EdtNomeProd: TEdit;
-    DBGrid1: TDBGrid;
-    LblCodProduto: TLabel;
-    EdtCodProduto: TEdit;
-    BtnProcurar: TButton;
-    Label1: TLabel;
-    DBGrid2: TDBGrid;
-    Label3: TLabel;
     ADOConnection: TADOConnection;
     DataSource: TDataSource;
     ADOQuery: TADOQuery;
-    EdtCodUniversal: TEdit;
     PopupMenu1: TPopupMenu;
-    Adicionarcarrinho1: TMenuItem;
+    Adicionarcarrinho: TMenuItem;
     ADOQuerycod_produto: TIntegerField;
     ADOQuerynome_produto: TWideStringField;
     ADOQuerycod_universal: TIntegerField;
@@ -46,17 +33,44 @@ type
     ADOQueryCartveiculo: TWideStringField;
     ADOQueryCartpreco: TFMTBCDField;
     ADOQueryCartquantidade: TIntegerField;
-    Btn: TButton;
+    PageControl: TPageControl;
+    Vendas: TTabSheet;
+    LblNomeProduto: TLabel;
+    LblCodProduto: TLabel;
+    LblCodUniversal: TLabel;
+    DBGrid1: TDBGrid;
+    EdtNomeProd: TEdit;
+    EdtCodProduto: TEdit;
+    BtnProcurar: TButton;
+    EdtCodUniversal: TEdit;
+    BtnLimparPesquisa: TButton;
+    PgCarrinho: TTabSheet;
+    Label2: TLabel;
+    LblTitle: TLabel;
+    DBGrid2: TDBGrid;
+    Button1: TButton;
+    BtnLimparCarrinho: TButton;
+    BtnRemoverItem: TButton;
+    RemoveCheck: TCheckBox;
+    BtnOrcamento: TButton;
+    ClearCheck: TCheckBox;
     procedure CarregarProdutos;
     procedure FormCreate(Sender: TObject);
     procedure BtnProcurarClick(Sender: TObject);
-    procedure Adicionarcarrinho1Click(Sender: TObject);
     procedure CarrinhoGrid;
     procedure BtnOrcamentoClick(Sender: TObject);
+    procedure BtnLimparPesquisaClick(Sender: TObject);
+    procedure RemoveCheckClick(Sender: TObject);
+    procedure BtnRemoverItemClick(Sender: TObject);
+    procedure ClearCheckClick(Sender: TObject);
+    procedure BtnLimparCarrinhoClick(Sender: TObject);
+    procedure AddCarrinho(Sender: TObject);
+    procedure AdicionarcarrinhoClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    CartQtd: integer;
   end;
 
 var
@@ -65,6 +79,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses Addcart;
 
 procedure TMain.FormCreate(Sender: TObject);
 begin
@@ -80,25 +96,15 @@ begin
 end;
 
 
-procedure TMain.Adicionarcarrinho1Click(Sender: TObject);
-var
-  SelectedRow: Integer;
-  ProdutoID: Integer;
-  Quantidade: Integer;
-  SQLInsert: string;
-
+procedure TMain.ClearCheckClick(Sender: TObject);
 begin
-  PageControl.ActivePageIndex := 1;
-  ProdutoID := DbGrid1.DataSource.DataSet.FieldByName('cod_produto').AsInteger;
-  Quantidade := 1;
+  BtnLimparCarrinho.Enabled := ClearCheck.Checked;
+end;
 
-  SQLInsert := 'INSERT INTO carrinho (cod_produto, quantidade) ' + 'VALUES (' + IntToStr(ProdutoID) + ', ' + IntToStr(Quantidade) + ')';
-  ADOQuery.SQL.Text := SQLInsert;
-  ADOQuery.ExecSQL;
-  CarregarProdutos;
-  CarrinhoGrid;
-  end;
-
+procedure TMain.RemoveCheckClick(Sender: TObject);
+begin
+  BtnRemoverItem.Enabled := RemoveCheck.Checked;
+end;
 
 procedure TMain.BtnProcurarClick(Sender: TObject);
 begin
@@ -133,6 +139,57 @@ ADOQuery.Parameters.ParamByName('nome_produto').Value := '%' + EdtNomeProd.Text 
     end;
 end;
 
+
+procedure TMain.BtnRemoverItemClick(Sender: TObject);
+var
+ProdutoID: Integer;
+
+begin
+ProdutoID := DbGrid2.DataSource.DataSet.FieldByName('cod_produto').AsInteger;
+
+  ADOQueryCart.SQL.Text := 'DELETE FROM carrinho WHERE cod_produto = ' + IntToStr(ProdutoID);
+  ADOQueryCart.ExecSQL;
+  CarrinhoGrid;
+  RemoveCheck.Checked := false;
+end;
+
+procedure TMain.AddCarrinho(Sender: TObject);
+var
+  SelectedRow: Integer;
+  ProdutoID: Integer;
+  SQLInsert: string;
+
+begin
+  PageControl.ActivePageIndex := 1;
+  ProdutoID := DbGrid1.DataSource.DataSet.FieldByName('cod_produto').AsInteger;
+
+  SQLInsert := 'INSERT INTO carrinho (cod_produto, quantidade) ' + 'VALUES (' + IntToStr(ProdutoID) + ', ' + IntToStr(CartQtd) + ')';
+  ADOQuery.SQL.Text := SQLInsert;
+  ADOQuery.ExecSQL;
+  CarregarProdutos;
+  CarrinhoGrid;
+end;
+
+procedure TMain.AdicionarcarrinhoClick(Sender: TObject);
+var
+  AddCartForm: TFormAddCart;
+begin
+  AddCartForm := TFormAddCart.Create(Application);
+  AddCartForm.ShowModal;
+end;
+
+procedure TMain.BtnLimparCarrinhoClick(Sender: TObject);
+begin
+  ADOQueryCart.SQL.Text := 'DELETE FROM carrinho';
+  ADOQueryCart.ExecSQL;
+  CarrinhoGrid;
+  ClearCheck.Checked := false;
+end;
+
+procedure TMain.BtnLimparPesquisaClick(Sender: TObject);
+begin
+  CarregarProdutos;
+end;
 
 procedure TMain.BtnOrcamentoClick(Sender: TObject);
 begin

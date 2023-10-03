@@ -2,7 +2,8 @@ program MainProj;
 
 uses
   Vcl.Forms,
-  MainUnit in 'MainUnit.pas' {Main};
+  MainUnit in 'MainUnit.pas' {Main},
+  Addcart in 'Addcart.pas' {FormAddCart};
 
 {$R *.res}
 

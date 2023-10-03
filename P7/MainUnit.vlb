@@ -1,23 +1,5 @@
-﻿[LblNomeProduto]
-Coordinates=540,256,111,58
-
-[EdtNomeProd]
-Coordinates=10,188,95,58
-
-[DBGrid2]
-Coordinates=519,324,64,36
-
-[BtnProcurar]
-Coordinates=427,10,83,58
-
-[PageControl]
-Coordinates=423,324,86,36
-
-[DataSource]
+﻿[DataSource]
 Coordinates=0,0,82,36
-
-[EdtCodProduto]
-Coordinates=520,10,102,58
 
 [ADOConnection]
 Coordinates=443,475,107,36
@@ -26,27 +8,6 @@ Coordinates=443,475,107,36
 Coordinates=10,10,97,168
 Visible=True
 
-[Label1]
-Coordinates=117,10,53,58
-
-[DBGrid1]
-Coordinates=188,324,64,36
-
-[EdtCodUniversal]
-Coordinates=306,10,111,58
-
-[LblCodProduto]
-Coordinates=10,324,100,58
-
-[Vendas]
-Coordinates=120,324,58,36
-
-[Label3]
-Coordinates=338,256,53,58
-
 []
-Coordinates=115,188,114,58
-
-[PgCarrinho]
-Coordinates=10,392,77,36
+Coordinates=423,324,86,36
 
